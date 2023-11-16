@@ -17,3 +17,14 @@ spring:
   logging:
     level:
       org.hibernate.SQL: debug
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+amazonProperties:
+  endpointUrl: https://s3.us-east-1.amazonaws.com
+  accessKey: AKIAUNATVL73DEMNXPUY
+  secretKey: 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
+  bucketName: eventify-bucket

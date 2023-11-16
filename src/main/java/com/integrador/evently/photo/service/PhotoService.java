@@ -1,73 +1,65 @@
 package com.integrador.evently.photo.service;
 
-import com.integrador.evently.activities.dto.ActivityDTO;
-import com.integrador.evently.activities.model.Activity;
-import com.integrador.evently.activities.service.ActivityService;
-import com.integrador.evently.photo.dto.PhotoDTO;
-import com.integrador.evently.photo.interfaces.IPhotoService;
-import com.integrador.evently.photo.model.Photo;
-import com.integrador.evently.photo.repository.PhotoRepository;
-import org.modelmapper.ModelMapper;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 @Service
-public class PhotoService implements IPhotoService {
+public class PhotoService {
+    private AmazonS3Client amazonS3Client;
 
-    private final PhotoRepository photoRepository;
-    private final ActivityService activityService;
-    private final ModelMapper modelMapper;
+    private final AmazonProperties properties;
 
-    public PhotoService(ModelMapper modelMapper, PhotoRepository photoRepository, ActivityService activityService) {
-        this.photoRepository = photoRepository;
-        this.activityService = activityService;
-        this.modelMapper = modelMapper;
+    public PhotoService(AmazonProperties properties) {
+        this.properties = properties;
+        AWSCredentials credentials = new BasicAWSCredentials(this.properties.getAccessKey(), this.properties.getSecretKey());
+        this.amazonS3Client = new AmazonS3Client(credentials);
     }
 
-    @Override
-    public List<PhotoDTO> getPhotosByActivity(Long activityId) {
-        /*List<Photo> photosByActivity = photoRepository.findByPhotos_Activity_Id(activityId);
-        return photosByActivity.stream()
-                .map(photo -> modelMapper.map(photo, PhotoDTO.class))
-                .collect(Collectors.toList());*/
-        return null;
+    private File convertMultiPartToFile(MultipartFile file) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        return convFile;
     }
 
-    @Override
-    public PhotoDTO getPhotoById(Long id) {
-        Photo photo = photoRepository.findById(id).orElse(null);
-        return (photo != null) ? modelMapper.map(photo, PhotoDTO.class) : null;
+    private String generateFileName(MultipartFile multiPart) {
+        return multiPart.getOriginalFilename().replace(" ", "_");
     }
 
-    @Override
-    public PhotoDTO savePhoto(PhotoDTO photoDTO) {
-        Photo photo = modelMapper.map(photoDTO, Photo.class);
-        ActivityDTO activityDTO = activityService.getActivityById(photoDTO.getActivityId());
-        if (activityDTO != null) {
-            Activity activity = modelMapper.map(activityDTO, Activity.class);
-            //photo.setActivity(activity);
+    private void uploadFileTos3bucket(String fileName, File file) {
+        amazonS3Client.putObject(new PutObjectRequest(this.properties.getBucketName(), fileName, file));
+    }
+
+    public String uploadFile(MultipartFile multipartFile) {
+        String fileUrl = "";
+        try {
+            File file = convertMultiPartToFile(multipartFile);
+            String fileName = generateFileName(multipartFile);
+            fileUrl = this.properties.getEndpointUrl() + "/" + this.properties.getBucketName() + "/" + fileName;
+            uploadFileTos3bucket(fileName, file);
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        photo = photoRepository.save(photo);
-        return modelMapper.map(photo, PhotoDTO.class);
+        return fileUrl;
     }
 
-    @Override
-    public PhotoDTO updatePhoto(Long id, PhotoDTO photoDTO) {
-        Photo existingPhoto = photoRepository.findById(id).orElse(null);
-
-        if (existingPhoto != null) {
-            existingPhoto.setUrl(photoDTO.getUrl());
-            existingPhoto.setMain(photoDTO.isMain());
-
-            Photo updatedPhoto = photoRepository.save(existingPhoto);
-            return modelMapper.map(updatedPhoto, PhotoDTO.class);
-        }
-        return null;
-    }
-
-    @Override
-    public void deletePhoto(Long id) {
-        photoRepository.deleteById(id);
+    public String deleteFileFromS3Bucket(String fileUrl) {
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        amazonS3Client.deleteObject(new DeleteObjectRequest(this.properties.getBucketName() + "/", fileName));
+        return "Successfully deleted";
     }
 }
