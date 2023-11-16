@@ -8,6 +8,6 @@ public class User {
 
     @GetMapping("/user")
     public String saludo(){
-        return "Eventify!...";
+        return System.getenv("DB_URL");
     }
 }
