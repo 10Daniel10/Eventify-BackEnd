@@ -20,7 +20,14 @@ jobs:
     - name: Set Maven Version
       uses: stCarolas/setup-maven@v4.4
       with:
-        maven-version: 3.8.2
+        maven-version: 3.8.2.
+    - name: Configure Variables
+      run: |
+              export DB_URL=${{ secrets.DB_URL }}
+              export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+              export DB_USER=${{ secrets.DB_USER }}
+              export AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
+              export AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}
     - name: Build with Maven
       run: mvn -B package --file /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/pom.xml
     - name: Execute Jar File
