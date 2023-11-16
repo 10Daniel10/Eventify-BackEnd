@@ -28,6 +28,9 @@ jobs:
               export DB_USER=${{ secrets.DB_USER }}
               export AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
               export AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}
+              export AWS_BUCKET=${{ secrets.AWS_BUCKET }}
+              export AWS_ENDPOINT=${{ secrets.AWS_ENDPOINT }}
+              
     - name: Build with Maven
       run: mvn -B package --file /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/pom.xml
     - name: Execute Jar File
