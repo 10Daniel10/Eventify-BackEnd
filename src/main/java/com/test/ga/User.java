@@ -8,6 +8,6 @@ public class User {
 
     @GetMapping("/user")
     public String saludo(){
-        return System.getenv("DB_URL");
+        return "DB_URL";
     }
 }
