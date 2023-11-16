@@ -2,9 +2,9 @@ server:
   port: 8090
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/eventlyDB
-    username: loco
-    password: pass
+    url: jdbc:mysql://db.ctd.academy:3306/pi21023c01_GRUPO2
+    username: pi21023c01_GRUPO2
+    password: neoQuei3
     driver-class-name: com.mysql.cj.jdbc.Driver
     timeout: 60000
   jpa:
