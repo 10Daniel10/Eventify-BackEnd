@@ -23,7 +23,7 @@ jobs:
         maven-version: 3.8.2
     - name: Setting Variables
       run: |
-              export DB_URL=${{ secrets.DB_URL }}
+              export DB_URL=${{ vars.DB_URL }}
               export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
               export DB_USER=${{ secrets.DB_USER }}
               export AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
