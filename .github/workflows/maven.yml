@@ -32,13 +32,13 @@ jobs:
               export AWS_ENDPOINT=${{ secrets.AWS_ENDPOINT }}
     - name: Echo Variables
       run: |
-              echo DB_URL
-              echo DB_PASSWORD
-              echo DB_USER
-              echo AWS_SECRET_KEY
-              echo AWS_ACCESS_KEY
-              echo AWS_BUCKET
-              echo AWS_ENDPOINT
+              echo $DB_URL
+              echo $DB_PASSWORD
+              echo $DB_USER
+              echo $AWS_SECRET_KEY
+              echo $AWS_ACCESS_KEY
+              echo $AWS_BUCKET
+              echo $AWS_ENDPOINT
     - name: Build with Maven
       run: mvn -B package --file /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/pom.xml
     - name: Execute Jar File
