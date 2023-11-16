@@ -32,7 +32,7 @@ jobs:
               export AWS_ENDPOINT=${{ secrets.AWS_ENDPOINT }}
     - name: Echo Variables
       run: |
-              echo $DB_URL
+              echo "$DB_URL"
               echo $DB_PASSWORD
               echo $DB_USER
               echo $AWS_SECRET_KEY
