@@ -1,10 +1,10 @@
-package com.test.ga;
+package com.integrador.evently;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GaApplicationTests {
+class EventlyApplicationTests {
 
 	@Test
 	void contextLoads() {
