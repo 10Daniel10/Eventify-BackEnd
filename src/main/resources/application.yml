@@ -25,6 +25,6 @@ spring:
 
 amazonProperties:
   endpointUrl: https://s3.us-east-1.amazonaws.com
-  accessKey: AKIAUNATVL73DEMNXPUY
-  secretKey: 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
+  accessKey: AKIAUNATVL73NII4MQ4V
+  secretKey: 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
   bucketName: eventify-bucket
