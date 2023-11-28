@@ -6,6 +6,7 @@ on:
     branches: [ "main" ]
 
 env:
+      NAME: ${{ vars.NAME }}
       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -22,6 +23,7 @@ jobs:
     steps:
     - name: Echo Variables
       run: |
+              echo "$NAME"
               echo "$DB_URL"
               echo $DB_PASSWORD
               echo $DB_USER
