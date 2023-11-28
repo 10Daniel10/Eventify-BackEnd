@@ -7,13 +7,13 @@ on:
 
 env:
       NAME: ${{ vars.NAME }}
-      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
-      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_URL: ${{ secrets.DB_URL }}
-      DB_USER: ${{ secrets.DB_USER }}
+      AWS_ACCESS_KEY: ${{ vars.AWS_ACCESS_KEY }}
+      AWS_BUCKET: ${{ vars.AWS_BUCKET }}
+      AWS_ENDPOINT: ${{ vars.AWS_ENDPOINT }}
+      AWS_SECRET_KEY: ${{ vars.AWS_SECRET_KEY }}
+      DB_PASSWORD: ${{ vars.DB_PASSWORD }}
+      DB_URL: ${{ vars.DB_URL }}
+      DB_USER: ${{ vars.DB_USER }}
 
 jobs:
   build:
