@@ -6,6 +6,8 @@ on:
     branches: [ "main" ]
 
 env:
+        JAVA_HOME: /home/ubuntu/actions-runner/_work/_tool/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
+        JAVA_HOME_17_X64: /home/ubuntu/actions-runner/_work/_tool/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
         AWS_ACCESS_KEY: ${{ vars.AWS_ACCESS_KEY }}
         AWS_BUCKET: ${{ vars.AWS_BUCKET }}
         AWS_ENDPOINT: ${{ vars.AWS_ENDPOINT }}
@@ -22,7 +24,7 @@ jobs:
     steps:
     - name: Echo Variables
       run: |
-              echo "$DB_URL"
+              echo $DB_URL
               echo $DB_PASSWORD
               echo $DB_USER
               echo $AWS_SECRET_KEY
