@@ -31,7 +31,7 @@ jobs:
               echo $AWS_ACCESS_KEY
               echo $AWS_BUCKET
               echo $AWS_ENDPOINT
-              echo "Hola Mundo"
+              echo "Hola Mundo!"
     - uses: actions/checkout@v3
     - name: Set up JDK 17
       uses: actions/setup-java@v3
