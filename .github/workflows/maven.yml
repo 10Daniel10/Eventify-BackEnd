@@ -46,6 +46,6 @@ jobs:
       run: mvn -B package --file /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/pom.xml
     - name: Execute Jar File
       run: |
-            sudo kill -9 `sudo lsof -t -i:80`
-            sudo java -jar /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/target/evently-0.0.1-SNAPSHOT.jar.original &
+            sudo kill -9 `sudo lsof -t -i:8090`
+            sudo java -jar /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/target/evently-0.0.1-SNAPSHOT.jar &
 
