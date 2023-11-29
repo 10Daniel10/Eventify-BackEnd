@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.integrador</groupId>
-	<artifactId>eventify</artifactId>
+	<artifactId>evently</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>evently</name>
 	<description>Demo project for Spring Boot</description>
@@ -30,11 +30,6 @@
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.11.133</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
 		<dependency>
@@ -73,11 +68,7 @@
 			<artifactId>modelmapper</artifactId>
 			<version>3.1.1</version>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>6.1.5</version>
-        </dependency>
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -115,8 +106,6 @@
 						<exclude>
 							<groupId>org.project-lombok</groupId>
 							<artifactId>lombok</artifactId>
-							<groupId>commons-logging</groupId>
-                					<artifactId>commons-logging</artifactId>
 						</exclude>
 					</excludes>
 				</configuration>
