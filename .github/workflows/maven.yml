@@ -5,16 +5,6 @@ on:
   push:
     branches: [ "main" ]
 
-env:
-      NAME: ${{ vars.NAME }}
-      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
-      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_URL: ${{ secrets.DB_URL }}
-      DB_USER: ${{ secrets.DB_USER }}
-
 jobs:
   build:
 
@@ -38,6 +28,15 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+      env:
+        NAME: ${{ vars.NAME }}
+        AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+        AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+        AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_URL: ${{ secrets.DB_URL }}
+        DB_USER: ${{ secrets.DB_USER }}
     - name: Set Maven Version
       uses: stCarolas/setup-maven@v4.4
       with:
