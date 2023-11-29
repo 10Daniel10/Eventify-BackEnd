@@ -6,13 +6,13 @@ on:
     branches: [ "main" ]
 
 env:
-        AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-        AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
-        AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_URL: ${{ secrets.DB_URL }}
-        DB_USER: ${{ secrets.DB_USER }}
+        AWS_ACCESS_KEY: ${{ vars.AWS_ACCESS_KEY }}
+        AWS_BUCKET: ${{ vars.AWS_BUCKET }}
+        AWS_ENDPOINT: ${{ vars.AWS_ENDPOINT }}
+        AWS_SECRET_KEY: ${{ vars.AWS_SECRET_KEY }}
+        DB_PASSWORD: ${{ vars.DB_PASSWORD }}
+        DB_URL: ${{ vars.DB_URL }}
+        DB_USER: ${{ vars.DB_USER }}
 
 jobs:
   build:
@@ -43,5 +43,5 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/pom.xml
     - name: Execute Jar File
-      run: sudo kill -9 `sudo lsof -t -i:80` & sudo java -jar /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/target/evently-0.0.1-SNAPSHOT.jar &
+      run: sudo kill -9 `sudo lsof -t -i:8090` & sudo java -jar /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/target/evently-0.0.1-SNAPSHOT.jar &
            
