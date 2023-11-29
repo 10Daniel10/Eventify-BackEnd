@@ -1,15 +1,18 @@
 package com.integrador.evently.users.controller;
 
 
+import com.integrador.evently.users.dto.RegisterUser;
 import com.integrador.evently.users.dto.UserDto;
-import com.integrador.evently.users.model.UserType;
+import com.integrador.evently.users.dto.UserLogin;
 import com.integrador.evently.users.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -36,5 +39,18 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public void deleteUserById(@PathVariable Long userId) {
         userService.deleteUserById(userId);
+    }
+
+    @PostMapping("/register")
+    public UserDto createUser(@RequestBody RegisterUser user) {
+        return userService.createUser(user);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserDto> login(@RequestBody UserLogin credentials) {
+        UserDto logged = userService.login(credentials);
+        return logged != null ?
+                new ResponseEntity<>(logged, HttpStatus.CREATED) :
+                new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,6 +1,8 @@
 package com.integrador.evently.users.service;
 
+import com.integrador.evently.users.dto.RegisterUser;
 import com.integrador.evently.users.dto.UserDto;
+import com.integrador.evently.users.dto.UserLogin;
 import com.integrador.evently.users.model.User;
 import com.integrador.evently.users.model.UserType;
 import com.integrador.evently.users.repository.UserRepository;
@@ -53,5 +55,19 @@ public class UserService {
             }
         }
         return false;
+    }
+
+    public UserDto createUser(RegisterUser user) {
+        User newUser = modelMapper.map(user, User.class);
+        return modelMapper.map(userRepository.save(newUser), UserDto.class);
+    }
+
+    public UserDto login(UserLogin credentials) {
+        User user = userRepository.findByEmail(credentials.getEmail())
+                .orElse(null);
+        if (user != null && user.getPassword().equals(credentials.getPassword())) {
+            return modelMapper.map(user, UserDto.class);
+        }
+        return null;
     }
 }

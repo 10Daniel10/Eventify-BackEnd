@@ -1,7 +1,7 @@
 package com.integrador.evently.photo.model;
 
 
-import com.integrador.evently.activities.model.Activity;
+import com.integrador.evently.providers.model.Provider;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class Photo {
     private boolean isMain;
 
     @ManyToOne
-    @JoinColumn(name = "activity_id")
-    private Activity activity;
+    @JoinColumn(name = "provider_id")
+    private Provider provider;
 
 }

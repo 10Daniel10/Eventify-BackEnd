@@ -8,4 +8,6 @@ import java.util.Set;
 public class ProductDTO {
     private Long id;
     private String name;
+    private Double price;
+    private String description;
 }
