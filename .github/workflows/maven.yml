@@ -8,7 +8,6 @@ on:
 env:
         JAVA_HOME: /home/ubuntu/actions-runner/_work/_tool/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
         JAVA_HOME_17_X64: /home/ubuntu/actions-runner/_work/_tool/Java_Temurin-Hotspot_jdk/17.0.9-9/x64
-        NAME: ${{ vars.NAME }}
         AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
         AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
         AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -25,7 +24,6 @@ jobs:
     steps:
     - name: Echo Variables
       run: |
-              echo "$NAME"
               echo "$DB_URL"
               echo $DB_PASSWORD
               echo $DB_USER
@@ -47,5 +45,5 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/pom.xml
     - name: Execute Jar File
-      run: sudo kill -9 $(sudo lsof -t -i:80) & sudo java -jar /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/target/evently-0.0.1-SNAPSHOT.jar &
+      run: sudo kill -9 `sudo lsof -t -i:80` & sudo java -jar /home/ubuntu/actions-runner/_work/Eventify-BackEnd/Eventify-BackEnd/target/eventify-0.0.1-SNAPSHOT.jar &
 
