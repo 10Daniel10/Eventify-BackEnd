@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.integrador</groupId>
-	<artifactId>evently</artifactId>
+	<artifactId>eventify</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>evently</name>
 	<description>Demo project for Spring Boot</description>
