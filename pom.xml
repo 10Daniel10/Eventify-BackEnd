@@ -115,6 +115,8 @@
 						<exclude>
 							<groupId>org.project-lombok</groupId>
 							<artifactId>lombok</artifactId>
+							<groupId>commons-logging</groupId>
+                					<artifactId>commons-logging</artifactId>
 						</exclude>
 					</excludes>
 				</configuration>
