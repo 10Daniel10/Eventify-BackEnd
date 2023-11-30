@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/category")
+@CrossOrigin
 public class CategoryController implements ICategoryController {
 
     private final CategoryService categoryService;

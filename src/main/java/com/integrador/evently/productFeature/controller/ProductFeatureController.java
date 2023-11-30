@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/productFeature")
+@CrossOrigin
 public class ProductFeatureController {
 
     private final ProductFeatureService productFeatureService;
