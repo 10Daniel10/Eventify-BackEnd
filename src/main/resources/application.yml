@@ -2,9 +2,9 @@ server:
   port: 8090
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/eventlyDB
-    username: loco
-    password: pass
+    url: jdbc:mysql://db.ctd.academy:3306/pi21023c01_GRUPO2
+    username: pi21023c01_GRUPO2
+    password: neoQuei3
     driver-class-name: com.mysql.cj.jdbc.Driver
     timeout: 60000
   jpa:
@@ -12,12 +12,8 @@ spring:
       dialect: org.hibernate.dialect.MySQLDialect
       ddl-auto: none
   flyway:
-    enabled: false
-    user: loco
-    password: pass
-    schemas: eventlyDB
-    url: jdbc:mysql://localhost:3306/eventlyDB
-    locations: classpath:db/migration
+    enabled: true
+
   logging:
     level:
       org.hibernate.SQL: debug
@@ -29,6 +25,6 @@ spring:
 
 amazonProperties:
   endpointUrl: https://s3.us-east-1.amazonaws.com
-  accessKey: AKIAUNATVL73DEMNXPUY
-  secretKey: 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
+  accessKey: AKIAUNATVL73ENZ6TU6X
+  secretKey: 7m/Lu1TXddiOCp7/S+UugeRlOUUSfxCpVFz4j09
   bucketName: eventify-bucket
