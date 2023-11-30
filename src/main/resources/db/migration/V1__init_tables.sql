@@ -7,6 +7,7 @@
   DROP TABLE IF EXISTS booking_product;
   DROP TABLE IF EXISTS booking;
   DROP TABLE IF EXISTS provider_category;
+  DROP TABLE IF EXISTS product_feature;
 
 
   CREATE TABLE users (
@@ -74,6 +75,8 @@ INSERT INTO provider (name, information, address, user_id) VALUES
     name VARCHAR(255) NOT NULL,
     price DOUBLE NOT NULL,
     description VARCHAR(255) NOT NULL,
+    short_description VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
     provider_id BIGINT,
     category_id BIGINT,
     FOREIGN KEY (provider_id) REFERENCES provider(id),
@@ -81,14 +84,36 @@ INSERT INTO provider (name, information, address, user_id) VALUES
   );
 
     -- INSERT para product
-    INSERT INTO product (name, price, description, provider_id, category_id)
-    VALUES ('Vestido de novia', 600.0, "Vestido en tela sampo de calidad", 1,  1);
+    INSERT INTO product (name, price, description, short_description, location, provider_id, category_id)
+    VALUES ('Vestido de novia', 600.0, "Vestido en tela sampo de calidad", "short", "buenos aires", 1,  1);
 
-    INSERT INTO product (name, price, description, provider_id, category_id)
-    VALUES ('Costillar de ternera', 1000.0, "Carne premium", 2,  2);
+    INSERT INTO product (name, price, description, short_description, location, provider_id, category_id)
+    VALUES ('Vestido de dama de honor', 666.0, "Vestido de algodón", "short", "buenos aires", 1,  1);
 
-    INSERT INTO product (name, price, description, provider_id, category_id)
-    VALUES ('Luces de neón', 765.0, "Set de 8 luces de neón", 3,  3);
+    INSERT INTO product (name, price, description, short_description, location, provider_id, category_id)
+    VALUES ('Costillar de ternera', 1000.0, "Carne premium", "short", "buenos aires", 2,  2);
+
+    INSERT INTO product (name, price, description, short_description, location, provider_id, category_id)
+    VALUES ('Luces de neón', 765.0, "Set de 8 luces de neón", "short", "buenos aires", 3,  3);
+
+  CREATE TABLE product_feature (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    description VARCHAR(255) NOT NULL,
+    product_id BIGINT,
+    FOREIGN KEY (product_id) REFERENCES product(id)
+  );
+
+  INSERT INTO product_feature (description, product_id)
+  VALUES ("feature", 1);
+
+  INSERT INTO product_feature (description, product_id)
+  VALUES ("feature", 2);
+
+  INSERT INTO product_feature (description, product_id)
+  VALUES ("feature2", 2);
+
+  INSERT INTO product_feature (description, product_id)
+  VALUES ("feature", 3);
 
 
   CREATE TABLE photo (

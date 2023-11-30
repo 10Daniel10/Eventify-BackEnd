@@ -13,7 +13,9 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
+    private String shortDescription;
     private String description;
+    private String location;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
