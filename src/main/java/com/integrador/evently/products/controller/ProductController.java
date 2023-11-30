@@ -1,6 +1,7 @@
 package com.integrador.evently.products.controller;
 
 import com.integrador.evently.products.dto.ProductDTO;
+import com.integrador.evently.products.dto.ProductPostDTO;
 import com.integrador.evently.products.interfaces.IProductController;
 import com.integrador.evently.products.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -32,9 +33,25 @@ public class ProductController implements IProductController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<ProductDTO>> getProductsByCategoryId(@PathVariable Long id) {
+        List<ProductDTO> productsDTO = productService.getProductsByCategoryId(id);
+        return (productsDTO != null)
+                ? new ResponseEntity<>(productsDTO, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/provider/{id}")
+    public ResponseEntity<List<ProductDTO>> getProductsByProviderId(@PathVariable Long id) {
+        List<ProductDTO> productsDTO = productService.getProductsByProviderId(id);
+        return (productsDTO != null)
+                ? new ResponseEntity<>(productsDTO, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping
-    public ResponseEntity<ProductDTO> saveProduct(@RequestBody ProductDTO productDTO) {
-        ProductDTO savedProduct = productService.saveProduct(productDTO);
+    public ResponseEntity<ProductDTO> saveProduct(@RequestBody ProductPostDTO productPostDTO) {
+        ProductDTO savedProduct = productService.saveProduct(productPostDTO);
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 

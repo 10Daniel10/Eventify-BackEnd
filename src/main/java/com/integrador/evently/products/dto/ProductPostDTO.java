@@ -2,10 +2,10 @@ package com.integrador.evently.products.dto;
 
 import lombok.Data;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
-public class ProductDTO {
+public class ProductPostDTO {
     private Long id;
     private String name;
     private Double price;
@@ -14,4 +14,5 @@ public class ProductDTO {
     private String location;
     private Long categoryId;
     private Long providerId;
+    private List<String> features;
 }
