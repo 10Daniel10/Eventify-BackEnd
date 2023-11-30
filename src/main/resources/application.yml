@@ -24,7 +24,7 @@ spring:
       max-request-size: 10MB
 
 amazonProperties:
-  endpointUrl: ${AWS_ENDPOINT}
-  accessKey: ${AWS_ACCESS_KEY}
-  secretKey: ${AWS_SECRET_KEY}
-  bucketName: ${AWS_BUCKET}
+  endpointUrl: https://s3.us-east-1.amazonaws.com
+  accessKey: AKIAUNATVL73ENZ6TU6X
+  secretKey: 7m/Lu1TXddiOCp7/S+UugeRlOUUSfxCpVFz4j09
+  bucketName: eventify-bucket
