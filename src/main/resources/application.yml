@@ -12,7 +12,7 @@ spring:
       dialect: org.hibernate.dialect.MySQLDialect
       ddl-auto: none
   flyway:
-    enabled: true
+    enabled: false
 
   logging:
     level:
