@@ -1,9 +1,10 @@
 package com.integrador.evently.products.service;
 
+import com.integrador.evently.booking.model.Booking;
+import com.integrador.evently.booking.repository.BookingRepository;
 import com.integrador.evently.categories.repository.CategoryRepository;
 import com.integrador.evently.productFeature.model.ProductFeature;
 import com.integrador.evently.productFeature.repository.ProductFeatureRepository;
-import com.integrador.evently.productFeature.service.ProductFeatureService;
 import com.integrador.evently.products.dto.ProductDTO;
 import com.integrador.evently.products.dto.ProductPostDTO;
 import com.integrador.evently.products.interfaces.IProductService;
@@ -11,9 +12,9 @@ import com.integrador.evently.products.model.Product;
 import com.integrador.evently.products.repository.ProductRepository;
 import com.integrador.evently.providers.repository.ProviderRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,16 +26,19 @@ public class ProductService implements IProductService {
     private final CategoryRepository categoryRepository;
     private final ProviderRepository providerRepository;
     private final ProductFeatureRepository productFeatureRepository;
+    private final BookingRepository bookingRepository;
 
     public ProductService(ProductRepository productRepository, ModelMapper modelMapper,
                           CategoryRepository categoryRepository,
                           ProviderRepository providerRepository,
-                          ProductFeatureRepository productFeatureRepository) {
+                          ProductFeatureRepository productFeatureRepository,
+                          BookingRepository bookingRepository) {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
         this.categoryRepository = categoryRepository;
         this.providerRepository = providerRepository;
         this.productFeatureRepository = productFeatureRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     @Override
@@ -48,7 +52,23 @@ public class ProductService implements IProductService {
     @Override
     public ProductDTO getProductById(Long id) {
         Product product = productRepository.findById(id).orElse(null);
-        return (product != null) ? modelMapper.map(product, ProductDTO.class) : null;
+        ProductDTO productDTOResponse;
+        if (product != null) {
+            productDTOResponse = modelMapper.map(product, ProductDTO.class);
+        } else {
+            return null;
+        }
+        List<Booking> bookings= bookingRepository.findAll();
+        List<LocalDate> bookedDates = new ArrayList<>();
+
+        bookings.forEach(booking -> booking.getProducts().forEach(productInBooking -> {
+            if (productInBooking.getId().equals(id)){
+                bookedDates.add(booking.getStartDateTime().toLocalDate());
+            }
+        }));
+        productDTOResponse.setBookedDates(bookedDates);
+
+        return productDTOResponse;
     }
 
     @Override
