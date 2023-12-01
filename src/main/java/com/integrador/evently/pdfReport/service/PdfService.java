@@ -5,7 +5,9 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import java.io.ByteArrayOutputStream;
-import java.util.Date;
+import java.time.YearMonth;
+import java.util.Map;
+
 
 @Service
 public class PdfService {
@@ -16,21 +18,18 @@ public class PdfService {
         this.templateEngine = templateEngine;
     }
 
-    public ByteArrayOutputStream createPdf() throws Exception {
+    public ByteArrayOutputStream createPdf(String providerName, Map<YearMonth, Double> profitsPerMonth) throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ITextRenderer renderer = new ITextRenderer();
 
                 try {
-            // Create a Thymeleaf context
             Context context = new Context();
 
-            context.setVariable("currentDate", new Date());
-            context.setVariable("yourText", "test");
+            context.setVariable("providerName", providerName);
+            context.setVariable("profitsPerMonth", profitsPerMonth);
 
-            // Process the Thymeleaf template
             String htmlContent = templateEngine.process("template", context);
 
-            // Generate PDF from HTML
             renderer.setDocumentFromString(htmlContent);
             renderer.layout();
             renderer.createPDF(outputStream);
