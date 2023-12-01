@@ -10,4 +10,5 @@ public class RegisterUser {
     private String lastname;
     private UserType type;
     private String password;
+    private String username;
 }

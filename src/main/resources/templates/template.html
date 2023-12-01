@@ -70,12 +70,15 @@
     </div>
     <div class="date">
         <p>Date: <span th:text="${#dates.format(currentDate, 'dd/MM/yyyy')}"></span></p>
+
     </div>
 </header>
 
 <p>
     This is a sample paragraph. Replace it with your own content.
 </p>
+
+<p th:text="'Texto de prueba pasado como parámetro: ' + ${yourText}"></p>
 
 <table>
     <thead>

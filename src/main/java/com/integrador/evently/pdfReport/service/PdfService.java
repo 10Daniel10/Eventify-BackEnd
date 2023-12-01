@@ -20,11 +20,12 @@ public class PdfService {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ITextRenderer renderer = new ITextRenderer();
 
-        try {
+                try {
             // Create a Thymeleaf context
             Context context = new Context();
 
             context.setVariable("currentDate", new Date());
+            context.setVariable("yourText", "test");
 
             // Process the Thymeleaf template
             String htmlContent = templateEngine.process("template", context);
