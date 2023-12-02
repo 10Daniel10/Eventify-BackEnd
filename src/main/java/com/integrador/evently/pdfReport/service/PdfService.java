@@ -18,7 +18,7 @@ public class PdfService {
         this.templateEngine = templateEngine;
     }
 
-    public ByteArrayOutputStream createPdf(String providerName, Map<YearMonth, Double> profitsPerMonth) throws Exception {
+    public ByteArrayOutputStream createPdf(String providerName, Map<YearMonth, Double> profitsPerMonth, Map<YearMonth, Integer> bookingsPerMonth) throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ITextRenderer renderer = new ITextRenderer();
 
@@ -27,6 +27,7 @@ public class PdfService {
 
             context.setVariable("providerName", providerName);
             context.setVariable("profitsPerMonth", profitsPerMonth);
+            context.setVariable("bookingsPerMonth", bookingsPerMonth);
 
             String htmlContent = templateEngine.process("template", context);
 

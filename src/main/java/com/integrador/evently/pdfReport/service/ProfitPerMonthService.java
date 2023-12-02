@@ -1,5 +1,4 @@
 package com.integrador.evently.pdfReport.service;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -52,5 +51,28 @@ public class ProfitPerMonthService {
         }}
 
     return profitsPerMonth;
-}
+    }
+
+    public Map<YearMonth, Integer> calculateBookingsPerMonth(Long providerId) {
+        Map<YearMonth, Integer> bookingsPerMonth = new HashMap<>();
+
+        List<Booking> bookings = bookingRepository.findAll();
+        
+        Integer totalBookings = 0;
+
+        for (Booking booking : bookings) {
+            for(Product product: booking.getProducts()){
+                if(product.getProvider().getId() == providerId){
+
+                totalBookings ++;
+
+            
+            LocalDateTime bookingDate = booking.getStartDateTime();
+            YearMonth yearMonth = YearMonth.from(bookingDate);
+
+            bookingsPerMonth.put(yearMonth, bookingsPerMonth.getOrDefault(yearMonth, 0) + totalBookings);
+            }}
+        }
+    return bookingsPerMonth;
+    }
 }

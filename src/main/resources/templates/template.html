@@ -74,8 +74,8 @@
     </div>
 </header>
 
-<p>Este informe muestra las ganancias por mes del proveedor: <span th:text="${providerName}"></span></p>
-
+<h2>Reporte de movimientos del proveedor: <span th:text="${providerName}"></span></h2>
+<p>Ganancias por mes: </p>
 <table border="1">
     <thead>
         <tr>
@@ -85,6 +85,21 @@
     </thead>
     <tbody>
         <tr th:each="entry : ${profitsPerMonth}">
+            <td th:text="${entry.key}"></td>
+            <td th:text="${entry.value}"></td>
+        </tr>
+    </tbody>
+</table>
+<p>Cantidad de reservas por mes:</p>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Qty of bookings</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="entry : ${bookingsPerMonth}">
             <td th:text="${entry.key}"></td>
             <td th:text="${entry.value}"></td>
         </tr>
