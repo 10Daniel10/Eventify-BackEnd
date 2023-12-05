@@ -6,10 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
-import java.util.List;
-
-// data me pone los getters setters y constructor
 @Data
 @Builder
 @NoArgsConstructor
@@ -29,5 +25,5 @@ public class User {
     private String lastname;
     @Enumerated(EnumType.STRING)
     private UserType type;
-
+    private String avatar;
 }

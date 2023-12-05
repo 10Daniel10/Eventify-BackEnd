@@ -70,4 +70,14 @@ public class UserService {
         }
         return null;
     }
+
+    public UserDto updateUser(Long userId, UserDto user) {
+        User userToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (user.getUsername() != null) userToUpdate.setUsername(user.getUsername());
+        if (user.getLastname() != null) userToUpdate.setLastname(user.getLastname());
+        if (user.getEmail() != null) userToUpdate.setEmail(user.getEmail());
+
+        return modelMapper.map(userRepository.save(userToUpdate), UserDto.class);
+    }
 }

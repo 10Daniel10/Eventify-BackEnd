@@ -1,5 +1,7 @@
 package com.integrador.evently.products.dto;
 
+import com.integrador.evently.categories.dto.CategoryDTO;
+import com.integrador.evently.providers.dto.SimpleProviderDto;
 import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,7 +14,8 @@ public class ProductDTO {
     private String shortDescription;
     private String description;
     private String location;
-    private Long categoryId;
-    private Long providerId;
+    private CategoryDTO category;
+    private SimpleProviderDto provider;
     private List<LocalDate> bookedDates;
+    private List<String> imageUrls;
 }
