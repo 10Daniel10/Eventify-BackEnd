@@ -28,7 +28,7 @@ public class ProfitPerMonthService {
     for (BookingDTO booking : bookings) {
         double totalBookingProfits = 0.0;
         for (ProductDTO product : booking.getProducts()) {
-            if (product.getProviderId().equals(providerId)) {
+            if (product.getProvider().getId().equals(providerId)) {
                 double productPrice = product.getPrice();
                 totalBookingProfits += productPrice;
             }
@@ -51,7 +51,7 @@ public Map<YearMonth, Integer> calculateBookingsPerMonth(Long providerId, LocalD
     for (BookingDTO booking : bookings) {
         Integer totalBookings = 0;
         for (ProductDTO product : booking.getProducts()) {
-            if (product.getProviderId().equals(providerId)) {
+            if (product.getProvider().getId().equals(providerId)) {
                 totalBookings++;
             }
         }

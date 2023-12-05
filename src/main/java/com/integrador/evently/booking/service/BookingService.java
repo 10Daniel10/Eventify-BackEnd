@@ -79,7 +79,7 @@ public class BookingService {
             for (BookingDTO booking : bookings) {
 
                 for(ProductDTO product: booking.getProducts()){
-                    if (product.getProviderId().equals(providerId)){
+                    if (product.getProvider().getId().equals(providerId)){
                         bookingsByMonthAndProvider.add(booking);
                     }
 
