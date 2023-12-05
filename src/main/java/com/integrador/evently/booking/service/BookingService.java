@@ -7,8 +7,12 @@ import com.integrador.evently.products.dto.ProductDTO;
 import com.integrador.evently.products.model.Product;
 import com.integrador.evently.users.model.User;
 import com.integrador.evently.users.repository.UserRepository;
+
+import org.joda.time.YearMonth;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,4 +130,31 @@ public class BookingService {
     public void deleteBooking(Long id) {
         bookingRepository.deleteById(id);
     }
+
+    public List<BookingDTO> findBookingsByDateRangeAndProvider(LocalDateTime startDate, LocalDateTime endDate,
+        Long providerId) {
+    Optional<List<BookingDTO>> bookings = getBookingsByDateRange(startDate, endDate);
+    System.out.println("startDate: " + startDate);
+    System.out.println("endDate: " + endDate);
+    System.out.println("providerId: " + providerId);
+    System.out.println("bookings: " + bookings);
+
+    final List<BookingDTO> bookingsByMonthAndProvider = new ArrayList<>();
+    if (bookings.isPresent()) {
+        System.out.println("Estoy dentro del for loop");
+        for (BookingDTO booking : bookings.get()) {
+            System.out.println("Booking: " + booking);
+            for(ProductDTO product: booking.getProducts()){
+                if (product.getProviderId().equals(providerId)){
+                    bookingsByMonthAndProvider.add(booking);
+                }
+                
+            }
+            System.out.println("For loop:" + bookingsByMonthAndProvider);
+        }
+    }
+    return bookingsByMonthAndProvider;
+    }
+
+
 }

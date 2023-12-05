@@ -1,5 +1,4 @@
 package com.integrador.evently.pdfReport.service;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.HashMap;
@@ -9,70 +8,58 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.integrador.evently.booking.model.Booking;
-import com.integrador.evently.booking.repository.BookingRepository;
-import com.integrador.evently.products.model.Product;
-import com.integrador.evently.products.repository.ProductRepository;
-import com.integrador.evently.providers.repository.ProviderRepository;
+import com.integrador.evently.booking.dto.BookingDTO;
+import com.integrador.evently.booking.service.BookingService;
+import com.integrador.evently.products.dto.ProductDTO;
 
 @Service
 public class ProfitPerMonthService {
     
     @Autowired
-    private BookingRepository bookingRepository;
+    private BookingService bookingService;
 
-    @Autowired
-    private ProviderRepository providerRepository;
+    public Map<YearMonth, Double> calculateProfitsPerMonth(Long providerId, LocalDateTime startDate, LocalDateTime endDate) {
+    Map<YearMonth, Double> profitsPerMonth = new HashMap<>();
 
-    @Autowired
-    private ProductRepository productRepository;
+    List<BookingDTO> bookings = bookingService.findBookingsByDateRangeAndProvider(startDate, endDate, providerId);
 
-    public Map<YearMonth, Double> calculateProfitsPerMonth(Long providerId) {
-        Map<YearMonth, Double> profitsPerMonth = new HashMap<>();
-
-        List<Booking> bookings = bookingRepository.findAll();
-        
+    for (BookingDTO booking : bookings) {
         double totalBookingProfits = 0.0;
-
-        for (Booking booking : bookings) {
-            for(Product product: booking.getProducts()){
-                double currentBookingProfit = 0.0;
-                if(product.getProvider().getId() == providerId){
-
+        for (ProductDTO product : booking.getProducts()) {
+            if (product.getProviderId().equals(providerId)) {
                 double productPrice = product.getPrice();
-                currentBookingProfit += productPrice;
-                totalBookingProfits += currentBookingProfit;
+                totalBookingProfits += productPrice;
             }
-            
-            LocalDateTime bookingDate = booking.getStartDateTime();
-            YearMonth yearMonth = YearMonth.from(bookingDate);
-
-            profitsPerMonth.put(yearMonth, profitsPerMonth.getOrDefault(yearMonth, 0.0) + totalBookingProfits);
-        }}
-
-    return profitsPerMonth;
-    }
-
-    public Map<YearMonth, Integer> calculateBookingsPerMonth(Long providerId) {
-        Map<YearMonth, Integer> bookingsPerMonth = new HashMap<>();
-
-        List<Booking> bookings = bookingRepository.findAll();
-        
-        Integer totalBookings = 0;
-
-        for (Booking booking : bookings) {
-            for(Product product: booking.getProducts()){
-                if(product.getProvider().getId() == providerId){
-
-                totalBookings ++;
-
-            
-            LocalDateTime bookingDate = booking.getStartDateTime();
-            YearMonth yearMonth = YearMonth.from(bookingDate);
-
-            bookingsPerMonth.put(yearMonth, bookingsPerMonth.getOrDefault(yearMonth, 0) + totalBookings);
-            }}
         }
+        System.out.println(totalBookingProfits);
+        LocalDateTime bookingDate = booking.getStartDateTime();
+        YearMonth yearMonth = YearMonth.from(bookingDate);
+
+        profitsPerMonth.put(yearMonth, profitsPerMonth.getOrDefault(yearMonth, 0.0) + totalBookingProfits);
+    }
+    System.out.println(profitsPerMonth);
+    return profitsPerMonth;
+}
+
+public Map<YearMonth, Integer> calculateBookingsPerMonth(Long providerId, LocalDateTime startDate, LocalDateTime endDate) {
+    Map<YearMonth, Integer> bookingsPerMonth = new HashMap<>();
+
+    List<BookingDTO> bookings = bookingService.findBookingsByDateRangeAndProvider(startDate, endDate, providerId);
+
+    for (BookingDTO booking : bookings) {
+        Integer totalBookings = 0;
+        for (ProductDTO product : booking.getProducts()) {
+            if (product.getProviderId().equals(providerId)) {
+                totalBookings++;
+            }
+        }
+        System.out.println(totalBookings);
+        LocalDateTime bookingDate = booking.getStartDateTime();
+        YearMonth yearMonth = YearMonth.from(bookingDate);
+
+        bookingsPerMonth.put(yearMonth, bookingsPerMonth.getOrDefault(yearMonth, 0) + totalBookings);
+    }
+    System.out.println(bookingsPerMonth);
     return bookingsPerMonth;
     }
 }
