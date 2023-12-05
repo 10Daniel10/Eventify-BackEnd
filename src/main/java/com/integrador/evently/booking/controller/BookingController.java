@@ -3,7 +3,6 @@ package com.integrador.evently.booking.controller;
 import com.integrador.evently.booking.dto.BookingDTO;
 import com.integrador.evently.booking.model.Booking;
 import com.integrador.evently.booking.service.BookingService;
-import com.integrador.evently.categories.dto.CategoryDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,16 +33,16 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody BookingDTO bookingDTO) throws Exception {
-        BookingDTO updatedBooking = bookingService.updateBooking(id, bookingDTO);
-
-        if (updatedBooking != null) {
-            return ResponseEntity.ok(updatedBooking);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody BookingDTO bookingDTO) throws Exception {
+//        BookingDTO updatedBooking = bookingService.updateBooking(id, bookingDTO);
+//
+//        if (updatedBooking != null) {
+//            return ResponseEntity.ok(updatedBooking);
+//        }
+//
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
 
     @DeleteMapping("/{id}")
     public void deleteBooking(@PathVariable Long id) {

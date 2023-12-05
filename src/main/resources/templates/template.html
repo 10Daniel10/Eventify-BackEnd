@@ -28,9 +28,9 @@
         .logo-text {
             text-transform: uppercase;
             font-weight: bold;
-            margin-left: 10px; /* Adjust the spacing as needed */
-            font-size: 1.5em; /* Adjust the font size as needed */
-            line-height: 50px; /* Set line height to match the logo height */
+            margin-left: 10px; 
+            font-size: 1.5em; 
+            line-height: 50px; 
         }
 
         p {
@@ -69,56 +69,40 @@
         <div class="logo-text">EVENTIFY</div>
     </div>
     <div class="date">
-        <p>Date: <span th:text="${#dates.format(currentDate, 'dd/MM/yyyy')}"></span></p>
+        <p>Date: <span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
 
     </div>
 </header>
 
-<p>
-    This is a sample paragraph. Replace it with your own content.
-</p>
-
-<p th:text="'Texto de prueba pasado como parámetro: ' + ${yourText}"></p>
-
-<table>
+<h2>Reporte de movimientos del proveedor: <span th:text="${providerName}"></span></h2>
+<p>Ganancias por mes: </p>
+<table border="1">
     <thead>
-    <tr>
-        <th>Column 1</th>
-        <th>Column 2</th>
-        <th>Column 3</th>
-        <th>Column 4</th>
-        <th>Column 5</th>
-    </tr>
+        <tr>
+            <th>Month</th>
+            <th>Profit</th>
+        </tr>
     </thead>
     <tbody>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr th:each="entry : ${profitsPerMonth}">
+            <td th:text="${entry.key}"></td>
+            <td th:text="${entry.value}"></td>
+        </tr>
+    </tbody>
+</table>
+<p>Cantidad de reservas por mes:</p>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Qty of bookings</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="entry : ${bookingsPerMonth}">
+            <td th:text="${entry.key}"></td>
+            <td th:text="${entry.value}"></td>
+        </tr>
     </tbody>
 </table>
 
