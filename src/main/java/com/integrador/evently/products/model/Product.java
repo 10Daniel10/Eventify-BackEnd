@@ -31,5 +31,4 @@ public class Product {
     @CollectionTable(name = "product_image_url", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "url")
     private List<String> imageUrls;
-
 }

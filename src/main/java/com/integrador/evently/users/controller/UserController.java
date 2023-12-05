@@ -54,4 +54,9 @@ public class UserController {
                 new ResponseEntity<>(logged, HttpStatus.CREATED) :
                 new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
+
+    @PutMapping("/{userId}")
+    public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto user) {
+        return userService.updateUser(userId, user);
+    }
 }

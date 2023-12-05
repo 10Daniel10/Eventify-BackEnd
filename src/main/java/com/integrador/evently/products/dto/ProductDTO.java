@@ -17,4 +17,5 @@ public class ProductDTO {
     private CategoryDTO category;
     private SimpleProviderDto provider;
     private List<LocalDate> bookedDates;
+    private List<String> imageUrls;
 }

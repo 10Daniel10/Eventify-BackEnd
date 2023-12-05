@@ -10,4 +10,5 @@ public class UserDto {
     private String firstname;
     private String lastname;
     private UserType type;
+    private String avatar;
 }

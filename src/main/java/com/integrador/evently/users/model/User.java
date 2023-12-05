@@ -25,6 +25,5 @@ public class User {
     private String lastname;
     @Enumerated(EnumType.STRING)
     private UserType type;
-    private String photoUrl;
-
+    private String avatar;
 }

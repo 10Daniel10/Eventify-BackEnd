@@ -15,5 +15,6 @@ public class ProviderDTO {
     private String address;
     private List<CategoryDTO> category;
     private List<ProductDTO> products;
+    private String imageUrl;
     private UserDto user;
 }

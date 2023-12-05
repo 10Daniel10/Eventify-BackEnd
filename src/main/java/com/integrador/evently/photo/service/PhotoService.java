@@ -69,22 +69,12 @@ public String uploadFile(MultipartFile multipartFile) {
     return fileUrl;
     }
 
-    public String uploadCategoryFile(MultipartFile multipartFile, Long categoryId) {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-
-        String fileUrl = this.uploadFile(multipartFile);
-        category.setPhotoUrl(fileUrl);
-        categoryRepository.save(category);
-        return fileUrl;
-    }
-
     public String uploadUserFile(MultipartFile multipartFile, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String fileUrl = this.uploadFile(multipartFile);
-        user.setPhotoUrl(fileUrl);
+        user.setAvatar(fileUrl);
         userRepository.save(user);
         return fileUrl;
     }

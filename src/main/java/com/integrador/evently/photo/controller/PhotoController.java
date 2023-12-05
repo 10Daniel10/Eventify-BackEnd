@@ -14,11 +14,6 @@ public class PhotoController {
     PhotoController(PhotoService photoService) {
         this.photoService = photoService;
     }
-    @PostMapping("/categories/{categoryId}/upload")
-    public String uploadCategoryFile(@RequestPart(value = "file") MultipartFile file,
-                             @PathVariable Long categoryId) {
-        return this.photoService.uploadCategoryFile(file, categoryId);
-    }
 
     @PostMapping("/users/{userId}/upload")
     public String uploadUserFile(@RequestPart(value = "file") MultipartFile file,
@@ -30,6 +25,12 @@ public class PhotoController {
     public String uploadProductFile(@RequestPart(value = "file") MultipartFile file,
                                  @PathVariable Long productId) {
         return this.photoService.uploadProductFile(file, productId);
+    }
+
+    @PostMapping("/provider/{providerId}/upload")
+    public String uploadProviderFile(@RequestPart(value = "file") MultipartFile file,
+                                    @PathVariable Long providerId) {
+        return this.photoService.uploadProviderFile(file, providerId);
     }
 
     @DeleteMapping("/deleteFile")
