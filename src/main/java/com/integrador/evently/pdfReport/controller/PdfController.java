@@ -5,7 +5,6 @@ import com.integrador.evently.pdfReport.service.ProfitPerMonthService;
 import com.integrador.evently.providers.dto.ProviderDTO;
 import com.integrador.evently.providers.service.ProviderService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,17 +24,15 @@ import java.util.Map;
 @RequestMapping("/report")
 @CrossOrigin
 public class PdfController {
-    @Autowired
-    private ProfitPerMonthService profitPerMonthService;
+    private final ProfitPerMonthService profitPerMonthService;
 
-    @Autowired
-    private ProviderService providerService;
-
-
+    private final ProviderService providerService;
     private final PdfService pdfService;
 
-    public PdfController(PdfService pdfService) {
+    public PdfController(PdfService pdfService, ProfitPerMonthService profitPerMonthService, ProviderService providerService) {
         this.pdfService = pdfService;
+        this.profitPerMonthService = profitPerMonthService;
+        this.providerService = providerService;
     }
 
     @GetMapping("/{providerId}")

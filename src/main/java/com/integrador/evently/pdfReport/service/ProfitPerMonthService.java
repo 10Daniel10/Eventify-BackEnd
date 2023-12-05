@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.integrador.evently.booking.dto.BookingDTO;
@@ -14,9 +13,12 @@ import com.integrador.evently.products.dto.ProductDTO;
 
 @Service
 public class ProfitPerMonthService {
-    
-    @Autowired
-    private BookingService bookingService;
+
+    private final BookingService bookingService;
+
+    public ProfitPerMonthService(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     public Map<YearMonth, Double> calculateProfitsPerMonth(Long providerId, LocalDateTime startDate, LocalDateTime endDate) {
     Map<YearMonth, Double> profitsPerMonth = new HashMap<>();
