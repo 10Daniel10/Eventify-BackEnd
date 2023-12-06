@@ -1,6 +1,7 @@
 package com.integrador.evently.users.dto;
 
 import com.integrador.evently.users.model.UserType;
+import jakarta.annotation.Nullable;
 import lombok.Data;
 
 @Data
@@ -11,8 +12,10 @@ public class RegisterUser {
     private UserType type;
     private String password;
     private String username;
+    @Nullable
     private String providerAddress;
-    private String providerImageUrl;
+    @Nullable
     private String providerInformation;
+    @Nullable
     private String providerName;
 }

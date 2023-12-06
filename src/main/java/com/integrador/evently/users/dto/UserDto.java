@@ -1,5 +1,7 @@
 package com.integrador.evently.users.dto;
+import com.integrador.evently.providers.dto.ProviderDTO;
 import com.integrador.evently.users.model.UserType;
+import jakarta.annotation.Nullable;
 import lombok.Data;
 
 @Data
@@ -11,4 +13,6 @@ public class UserDto {
     private String lastname;
     private UserType type;
     private String avatar;
+    @Nullable
+    private ProviderDTO providerInfo;
 }
