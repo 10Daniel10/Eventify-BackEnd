@@ -1,5 +1,9 @@
 package com.integrador.evently.users.service;
 
+import com.integrador.evently.providers.dto.ProviderDTO;
+import com.integrador.evently.providers.model.Provider;
+import com.integrador.evently.providers.repository.ProviderRepository;
+import com.integrador.evently.providers.service.ProviderService;
 import com.integrador.evently.users.dto.RegisterUser;
 import com.integrador.evently.users.dto.UserDto;
 import com.integrador.evently.users.dto.UserLogin;
@@ -7,6 +11,7 @@ import com.integrador.evently.users.model.User;
 import com.integrador.evently.users.model.UserType;
 import com.integrador.evently.users.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -17,7 +22,11 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    @Autowired
+    ProviderService providerService;
     private final ModelMapper modelMapper;
+    @Autowired
+    private ProviderRepository providerRepository;
 
     public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
@@ -59,7 +68,24 @@ public class UserService {
 
     public UserDto createUser(RegisterUser user) {
         User newUser = modelMapper.map(user, User.class);
-        return modelMapper.map(userRepository.save(newUser), UserDto.class);
+        UserDto userResponse = modelMapper.map(userRepository.save(newUser), UserDto.class);
+
+        if (user.getType().equals(UserType.USER)) {
+            return userResponse;
+        } else if (user.getType().equals(UserType.PROVIDER)) {
+            ProviderDTO providerDTO = new ProviderDTO();
+            providerDTO.setUser(userResponse);
+            providerDTO.setName(user.getProviderName());
+            providerDTO.setAddress(user.getProviderAddress());
+            providerDTO.setInformation(user.getProviderInformation());
+            providerDTO.setCategory(null);
+            providerDTO.setProducts(null);
+            providerDTO.setImageUrl(user.getProviderImageUrl());
+            providerService.saveProvider(providerDTO);
+
+            return userResponse;
+        }
+        return null;
     }
 
     public UserDto login(UserLogin credentials) {

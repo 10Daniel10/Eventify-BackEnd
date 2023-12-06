@@ -11,4 +11,8 @@ public class RegisterUser {
     private UserType type;
     private String password;
     private String username;
+    private String providerAddress;
+    private String providerImageUrl;
+    private String providerInformation;
+    private String providerName;
 }
