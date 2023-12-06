@@ -105,6 +105,17 @@ public class UserService {
         if (user.getUsername() != null) userToUpdate.setUsername(user.getUsername());
         if (user.getLastname() != null) userToUpdate.setLastname(user.getLastname());
         if (user.getEmail() != null) userToUpdate.setEmail(user.getEmail());
+        if (user.getFirstname() != null) userToUpdate.setFirstname(user.getFirstname());
+
+        if (user.getType().equals(UserType.PROVIDER)) {
+            Provider provider = providerRepository.findByUserId(userId)
+                    .orElseThrow(() -> new RuntimeException("Provider not found"));
+            ProviderDTO providerDTO = user.getProviderInfo();
+            if (providerDTO.getName() != null) provider.setName(providerDTO.getName());
+            if (providerDTO.getAddress() != null) provider.setAddress(providerDTO.getAddress());
+            if (providerDTO.getInformation() != null) provider.setInformation(providerDTO.getInformation());
+            providerRepository.save(provider);
+        }
 
         return modelMapper.map(userRepository.save(userToUpdate), UserDto.class);
     }

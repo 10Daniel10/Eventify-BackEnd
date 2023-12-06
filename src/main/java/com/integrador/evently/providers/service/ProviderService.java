@@ -60,8 +60,8 @@ public class ProviderService implements IProviderService {
     }
 
     private void setProvider(Provider provider, ProviderDTO providerDTO) {
-        provider.setName(providerDTO.getName());
-        provider.setInformation(providerDTO.getInformation());
-        provider.setAddress(providerDTO.getAddress());
+        if (providerDTO.getName() != null) provider.setName(providerDTO.getName());
+        if (providerDTO.getInformation() != null) provider.setInformation(providerDTO.getInformation());
+        if (providerDTO.getAddress() != null) provider.setAddress(providerDTO.getAddress());
     }
 }
