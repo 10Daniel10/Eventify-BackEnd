@@ -70,9 +70,7 @@ public class UserService {
         User newUser = modelMapper.map(user, User.class);
         UserDto userResponse = modelMapper.map(userRepository.save(newUser), UserDto.class);
 
-        if (user.getType().equals(UserType.USER)) {
-            return userResponse;
-        } else if (user.getType().equals(UserType.PROVIDER)) {
+        if (user.getType().equals(UserType.PROVIDER)) {
             ProviderDTO providerDTO = new ProviderDTO();
             providerDTO.setUser(userResponse);
             providerDTO.setName(user.getProviderName());
@@ -80,19 +78,23 @@ public class UserService {
             providerDTO.setInformation(user.getProviderInformation());
             providerDTO.setCategory(null);
             providerDTO.setProducts(null);
-            providerDTO.setImageUrl(user.getProviderImageUrl());
-            providerService.saveProvider(providerDTO);
-
-            return userResponse;
+            ProviderDTO provider = providerService.saveProvider(providerDTO);
+            userResponse.setProviderInfo(provider);
         }
-        return null;
+        return userResponse;
     }
 
     public UserDto login(UserLogin credentials) {
         User user = userRepository.findByEmail(credentials.getEmail())
                 .orElse(null);
         if (user != null && user.getPassword().equals(credentials.getPassword())) {
-            return modelMapper.map(user, UserDto.class);
+            UserDto dto = modelMapper.map(user, UserDto.class);
+            if (dto.getType().equals(UserType.PROVIDER)) {
+                Provider provider = providerRepository.findByUserId(dto.getId())
+                        .orElseThrow(() -> new RuntimeException("Provider not found"));
+                dto.setProviderInfo(modelMapper.map(provider, ProviderDTO.class));
+            }
+            return dto;
         }
         return null;
     }
