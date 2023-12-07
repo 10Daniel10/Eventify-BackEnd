@@ -15,4 +15,5 @@ public class ProductPostDTO {
     private Long categoryId;
     private Long providerId;
     private List<String> features;
+    private List<String> photos;
 }
