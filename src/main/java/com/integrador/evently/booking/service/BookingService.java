@@ -5,6 +5,7 @@ import com.integrador.evently.booking.model.Booking;
 import com.integrador.evently.booking.repository.BookingRepository;
 import com.integrador.evently.products.dto.ProductDTO;
 import com.integrador.evently.products.model.Product;
+import com.integrador.evently.products.repository.ProductRepository;
 import com.integrador.evently.users.repository.UserRepository;
 
 import org.modelmapper.ModelMapper;
@@ -22,11 +23,14 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final ProductRepository productRepository;
 
-    public BookingService(BookingRepository bookingRepository , UserRepository userRepository, ModelMapper modelMapper) {
+    public BookingService(BookingRepository bookingRepository , UserRepository userRepository, ModelMapper modelMapper,
+                          ProductRepository productRepository) {
         this.bookingRepository = bookingRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.productRepository = productRepository;
     }
 
     public List<BookingDTO> getUserBookings(Long userId) {
@@ -62,10 +66,20 @@ public class BookingService {
             throw new Exception("Booking startDate is after endDate");
         }
 
+        List<Long> productIds = booking.getProducts().stream().map(ProductDTO::getId).toList();
+
+        Booking bookingEntity = modelMapper.map(booking, Booking.class);
+        List<Product> allById = productRepository.findAllById(productIds);
+        if (allById.size() != productIds.size()) {
+            throw new Exception("Product not found");
+        }
+        if (!allById.isEmpty()) {
+            bookingEntity.setProducts(allById);
+        }
+
         userRepository.findById(booking.getUserId())
                 .orElseThrow(() -> new Exception("User not found"));
 
-        Booking bookingEntity = modelMapper.map(booking, Booking.class);
         return bookingRepository.save(bookingEntity);
     }
 
