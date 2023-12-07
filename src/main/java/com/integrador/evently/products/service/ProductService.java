@@ -61,11 +61,15 @@ public class ProductService implements IProductService {
         List<Booking> bookings= bookingRepository.findAll();
         List<LocalDate> bookedDates = new ArrayList<>();
 
-        bookings.forEach(booking -> booking.getProducts().forEach(productInBooking -> {
-            if (productInBooking.getId().equals(id)){
-                bookedDates.add(booking.getStartDateTime().toLocalDate());
+        bookings.forEach(booking -> {
+            boolean flag = false;
+            for (Product pr: booking.getProducts()) {
+                if (!flag && id.equals(pr.getId())){
+                    bookedDates.add(booking.getStartDateTime().toLocalDate());
+                    flag = true;
+                }
             }
-        }));
+        });
         productDTOResponse.setBookedDates(bookedDates);
 
         return productDTOResponse;

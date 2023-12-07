@@ -107,7 +107,7 @@ public class UserService {
         if (user.getEmail() != null) userToUpdate.setEmail(user.getEmail());
         if (user.getFirstname() != null) userToUpdate.setFirstname(user.getFirstname());
 
-        if (user.getType().equals(UserType.PROVIDER)) {
+        if (UserType.PROVIDER.equals(user.getType())) {
             Provider provider = providerRepository.findByUserId(userId)
                     .orElseThrow(() -> new RuntimeException("Provider not found"));
             ProviderDTO providerDTO = user.getProviderInfo();
