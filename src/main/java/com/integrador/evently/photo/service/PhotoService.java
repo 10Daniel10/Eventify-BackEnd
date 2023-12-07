@@ -60,7 +60,8 @@ public String uploadFile(MultipartFile multipartFile) {
     try {
         File file = convertMultiPartToFile(multipartFile);
         String fileName = generateFileName(multipartFile);
-        fileUrl = this.properties.getEndpointUrl() + "/" + this.properties.getBucketName() + "/" + fileName;
+
+        fileUrl = "https://" + this.properties.getBucketName() + ".s3.amazonaws.com/" + fileName;
         uploadFileTos3bucket(fileName, file);
         file.delete();
     } catch (Exception e) {
