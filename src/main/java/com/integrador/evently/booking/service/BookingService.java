@@ -40,13 +40,19 @@ public class BookingService {
         List<Booking> bookings = bookingRepository.findAll();
         List<BookingDTO> bookingsByProvider = new ArrayList<>();
         for (Booking booking : bookings) {
-            boolean flag = false;
-            for (Product product : booking.getProducts()) {
-                if (!flag && product.getProvider().getId().equals(providerId)) {
-                    bookingsByProvider.add(modelMapper.map(booking, BookingDTO.class));
-                    flag = true;
-                }
+            List<Product> filteredProducts = booking.getProducts().stream()
+                    .filter(product -> providerId.equals(product.getProvider().getId()))
+                    .toList();
+
+            if (!filteredProducts.isEmpty()) {
+                BookingDTO dto = modelMapper.map(booking, BookingDTO.class);
+                List<ProductDTO> products = filteredProducts.stream()
+                        .map(product -> modelMapper.map(product, ProductDTO.class))
+                        .collect(Collectors.toList());
+                dto.setProducts(products);
+                bookingsByProvider.add(dto);
             }
+
         }
         return bookingsByProvider;
     }
