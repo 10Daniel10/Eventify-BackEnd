@@ -106,6 +106,7 @@ public class UserService {
         if (user.getLastname() != null) userToUpdate.setLastname(user.getLastname());
         if (user.getEmail() != null) userToUpdate.setEmail(user.getEmail());
         if (user.getFirstname() != null) userToUpdate.setFirstname(user.getFirstname());
+        if (user.getAvatar() != null) userToUpdate.setAvatar(user.getAvatar());
 
         if (UserType.PROVIDER.equals(user.getType())) {
             Provider provider = providerRepository.findByUserId(userId)
