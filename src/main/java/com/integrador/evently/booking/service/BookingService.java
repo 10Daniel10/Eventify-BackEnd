@@ -4,6 +4,7 @@ import com.integrador.evently.booking.dto.BookingDTO;
 import com.integrador.evently.booking.model.Booking;
 import com.integrador.evently.booking.repository.BookingRepository;
 import com.integrador.evently.products.dto.ProductDTO;
+import com.integrador.evently.products.model.Product;
 import com.integrador.evently.users.repository.UserRepository;
 
 import org.modelmapper.ModelMapper;
@@ -33,6 +34,21 @@ public class BookingService {
         return bookings.stream()
                 .map(booking -> modelMapper.map(booking, BookingDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    public List<BookingDTO> getAllBookingsByProviderId(Long providerId) {
+        List<Booking> bookings = bookingRepository.findAll();
+        List<BookingDTO> bookingsByProvider = new ArrayList<>();
+        for (Booking booking : bookings) {
+            boolean flag = false;
+            for (Product product : booking.getProducts()) {
+                if (!flag && product.getProvider().getId().equals(providerId)) {
+                    bookingsByProvider.add(modelMapper.map(booking, BookingDTO.class));
+                    flag = true;
+                }
+            }
+        }
+        return bookingsByProvider;
     }
 
     public Booking createBooking(BookingDTO booking) throws Exception {

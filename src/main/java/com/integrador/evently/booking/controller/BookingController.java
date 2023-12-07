@@ -33,6 +33,12 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/provider/{providerId}")
+    public ResponseEntity<List<BookingDTO>> getAllBookingsByProviderId(@PathVariable Long providerId) {
+        List<BookingDTO> bookingDTOS = bookingService.getAllBookingsByProviderId(providerId);
+        return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
+    }
+
 //    @PutMapping("/{id}")
 //    public ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody BookingDTO bookingDTO) throws Exception {
 //        BookingDTO updatedBooking = bookingService.updateBooking(id, bookingDTO);
