@@ -101,7 +101,7 @@ public class ProductService implements IProductService {
         product.setLocation(productPostDTO.getLocation());
         product.setCategory(categoryRepository.findById(productPostDTO.getCategoryId()).orElse(null));
         product.setProvider(providerRepository.findById(productPostDTO.getProviderId()).orElse(null));
-        product.setImageUrls(productPostDTO.getPhotos());
+        product.setImageUrls(productPostDTO.getImageUrls());
         product = productRepository.save(product);
 
         Product finalProduct = product;
